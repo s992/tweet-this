@@ -39,13 +39,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 			// need to check and see if this is already installed ... if so, then abort!
 			local.moduleid = variables.config.getModuleID();
-
-			// comment this out if you want to allow more than 1 installation of this plugin per Mura CMS install.
-			if ( val(getInstallationCount()) neq 1 ) {
-				variables.config.getPluginManager().deletePlugin(local.moduleid);
-			} else {
-				// doSomethingElseIfNeeded();
-			};
+			
+			createSubTypes("Page");
 
 			application.appInitialized = false;
 		</cfscript>
@@ -70,6 +65,57 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		</cfscript>
 	</cffunction>
 
+	<!--- tweet-this specific --->
+	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
+		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
+		
+		<cfif $.event('siteID') EQ ''>
+			<cfset $.event('siteID',session.siteID) />
+		</cfif>
+		
+		<cfloop list="#arguments.types#" index="type">
+			<cfscript>
+				subType = application.classExtensionsManager.getSubTypeBean();
+				subType.setType(type);
+				subType.setSubType("Default");
+				subType.setSiteID( $.event('siteID') );
+				subType.load();
+				subType.setBaseTable("tcontent");
+				subType.setBaseKeyField("contentHistID");
+				subType.save();
+				createAttributes(subType);
+			</cfscript>
+			
+		</cfloop>
+		
+	</cffunction>
+	
+	<cffunction name="createAttributes" access="public" returntype="any" output="false">
+		<cfargument name="subType" required="true" />
+		
+		<cfscript>
+			extendSet = arguments.subType.getExtendSetByName("Tweet This!");
+			extendSet.setContainer("Basic Tab");
+			tweetCheck = extendSet.getAttributeByName("tweetcheck");
+			tweetCheck.setLabel("Tweet this?");
+			tweetCheck.setType("RadioGroup");
+			tweetCheck.setOptionsList("Yes^No");
+			tweetCheck.setOptionsLabelList("Yes^No");
+			tweetCheck.setDefaultValue("No");
+			tweetCheck.save();
+			
+			tweetBox = extendSet.getAttributeByName("tweetbox");
+			tweetBox.setLabel("Tweet Text:");
+			tweetBox.setType("TextArea");
+			tweetBox.setHint("Enter your Tweet here.");
+			tweetBox.setValidation("Regex");
+			tweetBox.setRegex("^.{1,140}$");
+			tweetBox.setMessage("Please enter no more than 140 characters in the Tweet Box.");
+			tweetBox.save();
+		</cfscript>
+		
+	</cffunction>
+	
 	<!--- *******************************    private    ******************************** --->
 	<cffunction name="getInstallationCount" access="private" returntype="any" output="false">
 		<cfscript>

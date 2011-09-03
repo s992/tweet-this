@@ -1,31 +1,80 @@
 <cfoutput><plugin>
-	<name>muraFW1</name>
-	<package>muraFW1</package>
+	<name>Tweet This!</name>
+	<package>tweet-this</package>
 	<directoryFormat>packageOnly</directoryFormat>
 	<loadPriority>5</loadPriority>
-	<version>2.323</version>
-	<provider>Steve Withington</provider>
-	<providerURL>http://stephenwithington.com</providerURL>
+	<version>1.0</version>
+	<provider>Sean Walsh</provider>
+	<providerURL>http://www.thehatrack.net</providerURL>
 	<category>Application</category>
 	<settings>
-		<!---<setting>
-			<name>Setting Name</name>
-			<label>Setting Label</label>
-			<hint>Setting Hint</hint>
-			<type>RadioGroup</type>
+		<setting>
+			<name>dsn</name>
+			<label>Datasource Name</label>
+			<type>text</type>
+			<required>true</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>dbUser</name>
+			<label>DSN Username:</label>
+			<type>text</type>
+			<required>true</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>dbPass</name>
+			<label>DSN Password:</label>
+			<type>text</type>
+			<required>true</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>dbPrefix</name>
+			<label>DSN Table Prefix:</label>
+			<type>text</type>
 			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message>Setting message</message>
-			<defaultvalue>1</defaultvalue>
-			<optionlist>0^1</optionlist>
-			<optionlabellist>No^Yes</optionlabellist>
-		</setting>--->	
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>consumerKey</name>
+			<label>Consumer Key:</label>
+			<hint>You can leave this blank if you wish to use the default Twitter application.</hint>
+			<type>text</type>
+			<required>false</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>consumerSecret</name>
+			<label>Consumer Secret Key:</label>
+			<hint>You can leave this blank if you wish to use the default Twitter application.</hint>
+			<type>text</type>
+			<required>false</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>oauthToken</name>
+			<type>hidden</type>
+			<required>false</required>
+		</setting>
+		<setting>
+			<name>oauthSecret</name>
+			<type>hidden</type>
+			<required>false</required>
+			<defaultvalue></defaultvalue>
+		</setting>
+		<setting>
+			<name>twitterAccount</name>
+			<type>hidden</type>
+			<required>false</required>
+			<defaultvalue></defaultvalue>
+		</setting>
 	</settings>
 	<eventHandlers>
 		<eventHandler event="onApplicationLoad" component="pluginEventHandler" persist="false" />
+		<eventHandler event="onApplicationStart" component="pluginEventHandler" persist="false" />
+		<eventHandler event="onAfterContentSave" component="pluginEventHandler" persist="false" />
 	</eventHandlers>
 	<displayobjects location="global">
-		<displayobject name="muraFW1" displaymethod="renderApp" component="pluginEventHandler" persist="false" />
 	</displayobjects>
 </plugin></cfoutput>

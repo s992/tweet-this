@@ -26,10 +26,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	framework = StructNew();
 
 	// !important: enter the plugin packageName here. must be the same as found in '/plugin/config.xml.cfm'
-	framework.package = 'muraFW1';
+	framework.package = 'tweet-this';
 	
 	// change to TRUE if you're developing the plugin so you can see changes in your controllers, etc.
-	framework.reloadApplicationOnEveryRequest = false;
+	framework.reloadApplicationOnEveryRequest = true;
 
 	// less commonly modified
 	framework.defaultSection = 'main';
