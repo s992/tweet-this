@@ -11,30 +11,54 @@
 		<setting>
 			<name>dsn</name>
 			<label>Datasource Name</label>
+			<hint></hint>
 			<type>text</type>
 			<required>true</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>dbUser</name>
 			<label>DSN Username:</label>
+			<hint></hint>
 			<type>text</type>
 			<required>true</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>dbPass</name>
 			<label>DSN Password:</label>
+			<hint></hint>
 			<type>text</type>
 			<required>true</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>dbPrefix</name>
 			<label>DSN Table Prefix:</label>
+			<hint></hint>
 			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>consumerKey</name>
@@ -42,7 +66,12 @@
 			<hint>You can leave this blank if you wish to use the default Twitter application.</hint>
 			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>consumerSecret</name>
@@ -50,24 +79,51 @@
 			<hint>You can leave this blank if you wish to use the default Twitter application.</hint>
 			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>oauthToken</name>
-			<type>hidden</type>
+			<label></label>
+			<hint></hint>
+			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
+			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>oauthSecret</name>
-			<type>hidden</type>
+			<label></label>
+			<hint></hint>
+			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 		<setting>
 			<name>twitterAccount</name>
-			<type>hidden</type>
+			<label></label>
+			<hint></hint>
+			<type>text</type>
 			<required>false</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
 			<defaultvalue></defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
 		</setting>
 	</settings>
 	<eventHandlers>

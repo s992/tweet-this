@@ -69,16 +69,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
 		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
 		
-		<cfif $.event('siteID') EQ ''>
-			<cfset $.event('siteID',session.siteID) />
-		</cfif>
-		
 		<cfloop list="#arguments.types#" index="type">
 			<cfscript>
 				subType = application.classExtensionsManager.getSubTypeBean();
 				subType.setType(type);
 				subType.setSubType("Default");
-				subType.setSiteID( $.event('siteID') );
+				subType.setSiteID( session.siteID );
 				subType.load();
 				subType.setBaseTable("tcontent");
 				subType.setBaseKeyField("contentHistID");
