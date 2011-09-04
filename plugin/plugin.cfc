@@ -66,20 +66,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	</cffunction>
 
 	<!--- tweet-this specific --->
-	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
+	<cffunction name="createSubTypes" access="public" returntype="any" output="true">
 		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
 		
+		<!--- Loop through all potential content types(Page, Gallery, Portal, etc) --->
 		<cfloop list="#arguments.types#" index="type">
 			<cfscript>
-				subType = application.classExtensionsManager.getSubTypeBean();
-				subType.setType(type);
-				subType.setSubType("Default");
+				// To be honest, I'm not sure if this is necessary since each content type is
+				// already using a "Default" subtype...
+				subType = application.classExtensionManager.getSubTypeBean();
+				subType.setType( type );
+				subType.setSubType( "Default" );
 				subType.setSiteID( session.siteID );
 				subType.load();
-				subType.setBaseTable("tcontent");
-				subType.setBaseKeyField("contentHistID");
+				subType.setBaseTable( "tcontent" );
+				subType.setBaseKeyField( "contentHistID" );
 				subType.save();
-				createAttributes(subType);
+				
+				// Create the extend set and attributes on our "new" subtype
+				createAttributes( subType );
 			</cfscript>
 			
 		</cfloop>
@@ -90,23 +95,31 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfargument name="subType" required="true" />
 		
 		<cfscript>
-			extendSet = arguments.subType.getExtendSetByName("Tweet This!");
-			extendSet.setContainer("Basic Tab");
-			tweetCheck = extendSet.getAttributeByName("tweetcheck");
-			tweetCheck.setLabel("Tweet this?");
-			tweetCheck.setType("RadioGroup");
-			tweetCheck.setOptionsList("Yes^No");
-			tweetCheck.setOptionsLabelList("Yes^No");
-			tweetCheck.setDefaultValue("No");
+			// First let's create the set. This will overwrite any existing set named "Tweet This!"
+			newSet = arguments.subType.getExtendSetByName( "Tweet This!" );
+			newSet.setSiteID( session.siteID );
+			newSet.setName( "Tweet This!" );
+			newSet.setContainer( "Basic" );
+			newSet.save();
+			
+			// Now to add the new attributes to the set...
+			extendSet = arguments.subType.getExtendSetByName( "Tweet This!" );
+			
+			tweetCheck = extendSet.getAttributeByName( "tweetcheck" );
+			tweetCheck.setLabel( "Tweet this?" );
+			tweetCheck.setType( "RadioGroup" );
+			tweetCheck.setOptionList( "Yes^No" );
+			tweetCheck.setOptionLabelList( "Yes^No" );
+			tweetCheck.setDefaultValue( "No" );
 			tweetCheck.save();
 			
-			tweetBox = extendSet.getAttributeByName("tweetbox");
-			tweetBox.setLabel("Tweet Text:");
-			tweetBox.setType("TextArea");
-			tweetBox.setHint("Enter your Tweet here.");
-			tweetBox.setValidation("Regex");
-			tweetBox.setRegex("^.{1,140}$");
-			tweetBox.setMessage("Please enter no more than 140 characters in the Tweet Box.");
+			tweetBox = extendSet.getAttributeByName( "tweetbox" );
+			tweetBox.setLabel( "Tweet Text:" );
+			tweetBox.setType( "TextArea" );
+			tweetBox.setHint( "Enter your Tweet here." );
+			tweetBox.setValidation( "Regex" );
+			tweetBox.setRegex( "^.{1,140}$" );
+			tweetBox.setMessage( "Please enter no more than 140 characters in the Tweet Box." );
 			tweetBox.save();
 		</cfscript>
 		
