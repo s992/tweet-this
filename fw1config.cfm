@@ -35,7 +35,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	framework.defaultSection = 'main';
 	framework.defaultItem = 'default';
 	framework.usingSubSystems = true;
-	framework.defaultSubsystem = 'public';
+	framework.defaultSubsystem = 'admin';
 
 	// ***** rarely modified *****
 	framework.applicationKey = framework.package;
