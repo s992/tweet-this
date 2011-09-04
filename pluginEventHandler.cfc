@@ -28,35 +28,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<!--- Include FW/1 configuration that is shared between the Mura CMS and the FW/1 application. --->
 	<cfset variables.framework = getFramework() />
 	
-	<cffunction name="OnApplicationStart" access="public" returntype="boolean" output="false">
- 		<cfscript>
-			if(not Len(  ))
-			
- 			/* 
-				If you are using this for a number of different accounts (allowing numerous users to acces Twitter)
-				you will need to specify only the consumerKey and consumerSecret
-
-				If you are using this for a single account only, set the oauthToken, oauthTokenSecret and your account name
-				in the init() method too, like this:
-
-					consumerKey			=	'',
-					consumerSecret		=	'',
-					oauthToken			=	'',
-					oauthTokenSecret	=	'',
-					userAccountName		=	'',
-					parseResults		=	true
-			*/
-			application.objMonkehTweet = createObject('component',
-		        'common.coldfumonkeh.monkehTweet')
-				.init(
-					consumerKey			=	'',
-					consumerSecret		=	'',
-					parseResults		=	true
-				);
-			return true;
-		</cfscript>
-	</cffunction>
-	
 	<cffunction name="onAfterContentSave" access="public" output="false">
 	</cffunction>
 
