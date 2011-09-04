@@ -6,9 +6,14 @@ INSTALLATION:
 ==========
 1. Deploy as you would a normal plugin, assign to a site(the plugin does not currently
    support multi-site installs).
+   *****
+   	Don't touch any of the settings, they are there because plugins apparently do not support
+   	hidden settings. If you already put stuff in there, oh well. It's getting overwritten.
+   *****
 2. Go to your plugin manager and open up the plugin admin page.
 3. Click the authorize link so that the plugin can store your oAuth details from Twitter.
-4. Tweet away!
+4. Tweet away! You'll find the Tweet Box towards the bottom of each "Page/Default" content
+   type.
 
 OTHER NOTES:
 ==========
