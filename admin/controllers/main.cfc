@@ -71,6 +71,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 											);
 							
 			if (returnData.success) {
+				rc.pc.setSetting('consumerKey',returnData.token);
+				rc.pc.setSetting('consumerSecret',returnData.token_secret);
 				rc.pc.setSetting('twitterAccount',returnData.screen_name);
 			}
 		</cfscript>
