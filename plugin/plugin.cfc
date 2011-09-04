@@ -66,7 +66,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	</cffunction>
 
 	<!--- tweet-this specific --->
-	<cffunction name="createSubTypes" access="public" returntype="any" output="true">
+	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
 		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
 		
 		<!--- Loop through all potential content types(Page, Gallery, Portal, etc) --->
