@@ -25,9 +25,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 --->
 </cfsilent>
 <cfoutput>
-	<h3>Admin Main</h3>	
+	<h3>Authorize Your Twitter Account</h3>	
+	<p>
+		Before you can start sending tweets from the Mura admin, you'll need to authorize this application to
+		send them from your account.
+	</p>
 	<ul id="navTask">
-		<li><a href="#buildURL('admin:main.another')#">Another Page</a></li>
+		<li><a href="#buildURL('admin:main.authorize')#">Click here to authorize!</a></li>
 	</ul>
-	<p>Hello there! Welcome to the Main view of the Admin section.</p>
 </cfoutput>

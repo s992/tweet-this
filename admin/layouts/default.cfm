@@ -28,14 +28,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 <cfsavecontent variable="local.newBody">
 	<cfoutput>
 		<div class="mfw1adminblock">
-			<div id="pageTitle"><h2>#rc.pc.getPackage()#</h2></div>
-			<div class="navwrapper">
-				<ul>
-					<li class="first<cfif rc.action eq 'admin:main.default'> active</cfif>"><a href="#buildURL('admin:main')#">Main</a></li>
-					<li<cfif rc.action eq 'admin:license.default'> class="active"</cfif>><a href="#buildURL('admin:license')#">License</a></li>
-					<li class="last<cfif rc.action eq 'admin:instructions.default'> active</cfif>"><a href="#buildURL('admin:instructions')#">Instructions</a></li>
-				</ul>
-			</div>
+			<div id="pageTitle"><h2>#rc.pc.getName()#</h2></div>
 		</div>
 
 		<cfif StructKeyExists(rc, 'errors') and IsArray(rc.errors) and ArrayLen(rc.errors)>

@@ -23,16 +23,58 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 --->
 <cfcomponent extends="controller" output="false">
+	
+	<cfscript>
+		application.objMonkehTweet = createObject('component',
+	        'com.coldfumonkeh.monkehTweet')
+			.init(
+				consumerKey			=	'TH7oeOR3DcpalsQpYAO4Dg',
+				consumerSecret		=	'GAdlfukmYpU5OsSNiq4FiP4bPRNjVHaPPO3mvpbs3b4',
+				parseResults		=	true
+			);
+	</cfscript>
 
 	<!--- ********************************* PAGES ******************************************* --->
 
 	<cffunction name="default" output="false" returntype="any">
 		<cfargument name="rc" />
-		<!---<cfparam name="rc.save" default="false" />
-		<cfparam name="rc.delete" default="false" />--->
+		
+	</cffunction>
+	
+	<cffunction name="authorize" output="false" returntype="any">
+		<cfargument name="rc" />
+		
 		<cfscript>
-			// rc.varName = '';
+			callback = 'http://';
+			callback &= rc.$.siteConfig().getDomain();
+			callback &= variables.fw.buildURL('admin:main.auth');
+			
+			authStruct = application.objMonkehTweet.getAuthorisation(callbackURL = callback);
+			
+			if (authStruct.success){
+				rc.pc.setSetting('oAuthToken',authStruct.token);
+				rc.pc.setSetting('oAuthSecret',authStruct.token_secret);
+			}
 		</cfscript>
+		<cflocation url="#authStruct.authURL#" addtoken="false" />
+		
+	</cffunction>
+	
+	<cffunction name="auth" output="false" returntype="any">
+		<cfargument name="rc" />
+		
+		<cfscript>
+			returnData	= application.objMonkehTweet.getAccessToken(  
+												requestToken	= 	rc.pc.getSetting('oAuthToken'),
+												requestSecret	= 	rc.pc.getSetting('oAuthSecret'),
+												verifier		=	rc.oauth_verifier
+											);
+							
+			if (returnData.success) {
+				rc.pc.setSetting('twitterAccount',returnData.screen_name);
+			}
+		</cfscript>
+		
 	</cffunction>
 
 </cfcomponent>
