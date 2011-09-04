@@ -28,8 +28,36 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<!--- Include FW/1 configuration that is shared between the Mura CMS and the FW/1 application. --->
 	<cfset variables.framework = getFramework() />
 	
-	<cffunction name="onAfterContentSave" access="public" output="false">
+	<cffunction name="onAfterContentSave" access="public" output="true">
+		<cfargument name="$" required="true" hint="mura scope" />
+		
+		<cfif $.event('tweetcheck') EQ "Yes">
+				<cfscript>
+				theTweet = $.event('tweetbox');
+					
+				application.objMonkehTweet = createObject('component',
+			        'com.coldfumonkeh.monkehTweet')
+					.init(
+						consumerKey			=	'TH7oeOR3DcpalsQpYAO4Dg',
+						consumerSecret		=	'GAdlfukmYpU5OsSNiq4FiP4bPRNjVHaPPO3mvpbs3b4',
+						parseResults		=	true
+					);
+	
+				application.objMonkehTweet.setFinalAccessDetails(
+									oauthToken			= 	pluginConfig.getSetting('consumerKey'),
+									oauthTokenSecret	=	pluginConfig.getSetting('consumerSecret'),
+									userAccountName		=	pluginConfig.getSetting('twitterAcount')
+								);
+								
+				application.objMonkehTweet.postUpdate(theTweet);
+				</cfscript>
+				
+		<cfelse>
+			<!--- No tweets to be sent... --->
+		</cfif>
+		
 	</cffunction>
+	
 
 	<!--- ********** Mura Specific Events ************* --->
 
