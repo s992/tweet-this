@@ -8,74 +8,10 @@
 	<providerURL>http://www.thehatrack.net</providerURL>
 	<category>Application</category>
 	<settings>
-		<setting>
-			<name>consumerKey</name>
-			<label></label>
-			<hint></hint>
-			<type>text</type>
-			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message></message>
-			<defaultvalue></defaultvalue>
-			<optionlist></optionlist>
-			<optionlabellist></optionlabellist>
-		</setting>
-		<setting>
-			<name>consumerSecret</name>
-			<label></label>
-			<hint></hint>
-			<type>text</type>
-			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message></message>
-			<defaultvalue></defaultvalue>
-			<optionlist></optionlist>
-			<optionlabellist></optionlabellist>
-		</setting>
-		<setting>
-			<name>oauthToken</name>
-			<label></label>
-			<hint></hint>
-			<type>text</type>
-			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message></message>
-			<defaultvalue></defaultvalue>
-			<optionlist></optionlist>
-			<optionlabellist></optionlabellist>
-		</setting>
-		<setting>
-			<name>oauthSecret</name>
-			<label></label>
-			<hint></hint>
-			<type>text</type>
-			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message></message>
-			<defaultvalue></defaultvalue>
-			<optionlist></optionlist>
-			<optionlabellist></optionlabellist>
-		</setting>
-		<setting>
-			<name>twitterAccount</name>
-			<label></label>
-			<hint></hint>
-			<type>text</type>
-			<required>false</required>
-			<validation></validation>
-			<regex></regex>
-			<message></message>
-			<defaultvalue></defaultvalue>
-			<optionlist></optionlist>
-			<optionlabellist></optionlabellist>
-		</setting>
 	</settings>
 	<eventHandlers>
 		<eventHandler event="onApplicationLoad" component="pluginEventHandler" persist="false" />
+		<eventHandler event="onBeforeContentSave" component="pluginEventHandler" persist="false" />
 		<eventHandler event="onAfterContentSave" component="pluginEventHandler" persist="false" />
 	</eventHandlers>
 	<displayobjects location="global">

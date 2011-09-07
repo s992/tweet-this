@@ -40,6 +40,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			// need to check and see if this is already installed ... if so, then abort!
 			local.moduleid = variables.config.getModuleID();
 			
+			createConfigExtendSet();
 			createSubTypes("Page");
 
 			application.appInitialized = false;
@@ -66,6 +67,64 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	</cffunction>
 
 	<!--- tweet-this specific --->
+	<cffunction name="createConfigExtendSet" access="public" returntype="void" output="false">
+		<cfscript>
+			configType = application.classExtensionManager.getSubTypeBean();
+			configType.setType( "Custom" );
+			configType.setSubType( "Tweet This Config" );
+			configType.setSiteID( session.siteID );
+			configType.load();
+			configType.setBaseTable( "tcontent" );
+			configType.setBaseKeyField( "contentHistID" );
+			configType.save();
+			
+			configSet = configType.getExtendSetByName( "Default" );
+			configSet.setSiteID( session.siteID );
+			configSet.save();
+			
+			createConfigAttributes( configType );
+		</cfscript>
+		
+	</cffunction>
+	
+	<cffunction name="createConfigAttributes" access="public" returntype="void" output="false">
+		<cfargument name="configType" required="true" />
+		<cfscript>
+			//Tweet This Config set
+			configSet = arguments.configType.getExtendSetByName( "Default" );
+			
+			accessKey = configSet.getAttributeByName( "accesskey" );
+			accessKey.setLabel( "Consumer Access Key" );
+			accessKey.setType( "text" );
+			accessKey.setDefaultValue( "" );
+			accessKey.save();
+			
+			secretKey = configSet.getAttributeByName( "secretkey" );
+			secretKey.setLabel( "Consumer Secret Key" );
+			secretKey.setType( "text" );
+			secretKey.setDefaultValue( "" );
+			secretKey.save();
+			
+			oauthToken = configSet.getAttributeByName( "oauthtoken" );
+			oauthToken.setLabel( "oAuth Token" );
+			oauthToken.setType( "text" );
+			oauthToken.setDefaultValue( "" );
+			oauthToken.save();
+			
+			oauthSecret = configSet.getAttributeByName( "oauthsecret" );
+			oauthSecret.setLabel( "oAuth Secret Token" );
+			oauthSecret.setType( "text" );
+			oauthSecret.setDefaultValue( "" );
+			oauthSecret.save();
+			
+			twitterAccount = configSet.getAttributeByName( "twitteraccount" );
+			twitterAccount.setLabel( "Twitter Account Name" );
+			twitterAccount.setType( "text" );
+			twitterAccount.setDefaultValue( "" );
+			twitterAccount.save();
+		</cfscript>
+	</cffunction>
+	
 	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
 		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
 		
