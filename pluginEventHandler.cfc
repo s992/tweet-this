@@ -28,11 +28,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<!--- Include FW/1 configuration that is shared between the Mura CMS and the FW/1 application. --->
 	<cfset variables.framework = getFramework() />
 	
-	<cffunction name="onAfterContentSave" access="public" output="true">
+	<cffunction name="onBeforeContentSave" access="public" output="false">
+		<cfargument name="$" required="true" hint="mura scope">
+		
+		<cfscript>
+			currentContentBean = $.getContentBean();
+			currentContentBean.setValue('tweetbox','');
+			currentContentBean.setValue('tweetcheck','No');
+		</cfscript>
+		
+	</cffunction>
+
+	<cffunction name="onAfterContentSave" access="public" output="false">
 		<cfargument name="$" required="true" hint="mura scope" />
 		
 		<cfif $.event('tweetcheck') EQ "Yes">
-				<cfscript>
+			<cfscript>
 				theTweet = $.event('tweetbox');
 					
 				application.objMonkehTweet = createObject('component',
@@ -50,7 +61,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 								);
 								
 				application.objMonkehTweet.postUpdate(theTweet);
-				</cfscript>
+			</cfscript>
 				
 		<cfelse>
 			<!--- No tweets to be sent... --->
