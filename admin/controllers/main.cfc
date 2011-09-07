@@ -44,7 +44,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<cffunction name="authorize" output="false" returntype="any">
 		<cfargument name="rc" />
 		
-		<cfscript>
+		<cfscript>			
 			callback = 'http://';
 			callback &= rc.$.siteConfig().getDomain();
 			callback &= variables.fw.buildURL('admin:main.auth');
@@ -52,10 +52,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			authStruct = application.objMonkehTweet.getAuthorisation(callbackURL = callback);
 			
 			if (authStruct.success){
-				rc.pc.setSetting('oAuthToken',authStruct.token);
-				rc.pc.setSetting('oAuthSecret',authStruct.token_secret);
+				session.oAuthToken  = authStruct.token;
+				session.oAuthSecret = authStruct.token_secret;
 			}
 		</cfscript>
+
 		<cflocation url="#authStruct.authURL#" addtoken="false" />
 		
 	</cffunction>
@@ -64,16 +65,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfargument name="rc" />
 		
 		<cfscript>
+			var extConfig = createObject("component","com.extendedConfig");
+			
 			returnData	= application.objMonkehTweet.getAccessToken(  
-												requestToken	= 	rc.pc.getSetting('oAuthToken'),
-												requestSecret	= 	rc.pc.getSetting('oAuthSecret'),
+												requestToken	= 	session.oAuthToken,
+												requestSecret	= 	session.oAuthSecret,
 												verifier		=	rc.oauth_verifier
 											);
-							
+											
 			if (returnData.success) {
-				rc.pc.setSetting('consumerKey',returnData.token);
-				rc.pc.setSetting('consumerSecret',returnData.token_secret);
-				rc.pc.setSetting('twitterAccount',returnData.screen_name);
+				extConfig.setData( 
+					session.oAuthToken,
+					session.oAuthSecret,
+					returnData.token,
+					returnData.token_secret,
+					returnData.screen_name 
+				);
 			}
 		</cfscript>
 		

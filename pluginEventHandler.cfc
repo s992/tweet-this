@@ -32,6 +32,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfargument name="$" required="true" hint="mura scope">
 		
 		<cfscript>
+			
+			if( $.event('tweetcheck') EQ 'Yes' AND Len( $.event('tweetbox') ) ) {
+				session.tweetcheck = 1;
+				session.tweettext = $.event('tweetbox');	
+			}
+			
 			currentContentBean = $.getContentBean();
 			currentContentBean.setValue('tweetbox','');
 			currentContentBean.setValue('tweetcheck','No');
@@ -42,9 +48,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<cffunction name="onAfterContentSave" access="public" output="false">
 		<cfargument name="$" required="true" hint="mura scope" />
 		
-		<cfif $.event('tweetcheck') EQ "Yes">
+		<cfif session.tweetcheck EQ 1>
 			<cfscript>
-				theTweet = $.event('tweetbox');
+				var extConfig = createObject("component","com.extendedConfig");
+				var theTweet = session.tweettext;
 					
 				application.objMonkehTweet = createObject('component',
 			        'com.coldfumonkeh.monkehTweet')
@@ -55,12 +62,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 					);
 	
 				application.objMonkehTweet.setFinalAccessDetails(
-									oauthToken			= 	pluginConfig.getSetting('consumerKey'),
-									oauthTokenSecret	=	pluginConfig.getSetting('consumerSecret'),
-									userAccountName		=	pluginConfig.getSetting('twitterAcount')
+									oauthToken			= 	extConfig.getValue('accesskey'),
+									oauthTokenSecret	=	extConfig.getValue('secretkey'),
+									userAccountName		=	extConfig.getValue('twitteraccount')
 								);
 								
 				application.objMonkehTweet.postUpdate(theTweet);
+				
+				session.tweetcheck = 0;
+				session.tweettext = '';
 			</cfscript>
 				
 		<cfelse>
@@ -69,7 +79,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		
 	</cffunction>
 	
-
 	<!--- ********** Mura Specific Events ************* --->
 
 	<cffunction name="onApplicationLoad" output="false">
