@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 <cfcomponent extends="controller" output="false">
 	
 	<cfscript>
-		application.objMonkehTweet = createObject('component',
+		variables.objMonkehTweet = createObject('component',
 	        'com.coldfumonkeh.monkehTweet')
 			.init(
 				consumerKey			=	'TH7oeOR3DcpalsQpYAO4Dg',
@@ -44,12 +44,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<cffunction name="authorize" output="false" returntype="any">
 		<cfargument name="rc" />
 		
-		<cfscript>			
+		<cfscript>
+			// Is there a better way to do this? Couldn't find one.
 			callback = 'http://';
 			callback &= rc.$.siteConfig().getDomain();
 			callback &= variables.fw.buildURL('admin:main.auth');
 			
-			authStruct = application.objMonkehTweet.getAuthorisation(callbackURL = callback);
+			authStruct = variables.objMonkehTweet.getAuthorisation(callbackURL = callback);
 			
 			if (authStruct.success){
 				session.oAuthToken  = authStruct.token;
@@ -67,7 +68,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfscript>
 			var extConfig = createObject("component","com.extendedConfig");
 			
-			returnData	= application.objMonkehTweet.getAccessToken(  
+			returnData	= variables.objMonkehTweet.getAccessToken(  
 												requestToken	= 	session.oAuthToken,
 												requestSecret	= 	session.oAuthSecret,
 												verifier		=	rc.oauth_verifier

@@ -53,7 +53,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 				var extConfig = createObject("component","com.extendedConfig");
 				var theTweet = session.tweettext;
 					
-				application.objMonkehTweet = createObject('component',
+				variables.objMonkehTweet = createObject('component',
 			        'com.coldfumonkeh.monkehTweet')
 					.init(
 						consumerKey			=	'TH7oeOR3DcpalsQpYAO4Dg',
@@ -61,13 +61,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 						parseResults		=	true
 					);
 	
-				application.objMonkehTweet.setFinalAccessDetails(
+				variables.objMonkehTweet.setFinalAccessDetails(
 									oauthToken			= 	extConfig.getValue('accesskey'),
 									oauthTokenSecret	=	extConfig.getValue('secretkey'),
 									userAccountName		=	extConfig.getValue('twitteraccount')
 								);
 								
-				application.objMonkehTweet.postUpdate(theTweet);
+				variables.objMonkehTweet.postUpdate(theTweet);
 				
 				session.tweetcheck = 0;
 				session.tweettext = '';
