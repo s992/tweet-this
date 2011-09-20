@@ -8,6 +8,19 @@
 	<providerURL>http://www.thehatrack.net</providerURL>
 	<category>Application</category>
 	<settings>
+		<setting>
+			<name>contentTypes</name>
+			<label>Content Types to Tweet From</label>
+			<hint>A caret(^) delimited list of the types of content you would like to be able to Tweet from</hint>
+			<type>Text</type>
+			<required>true</required>
+			<validation></validation>
+			<regex></regex>
+			<message></message>
+			<defaultvalue>Page^Link^File^Portal^Calendar^Gallery</defaultvalue>
+			<optionlist></optionlist>
+			<optionlabellist></optionlabellist>
+		</setting>
 	</settings>
 	<eventHandlers>
 		<eventHandler event="onApplicationLoad" component="pluginEventHandler" persist="false" />

@@ -1,24 +1,14 @@
-This plugin is very much in ALPHA. I take no responsibility for your drunken tweets or 
-any other catastrophic failures.
---
-
 INSTALLATION:
 ==========
-1. Deploy as you would a normal plugin, assign to a site(the plugin does not currently
-   support multi-site installs).
-   *****
-   	Don't touch any of the settings, they are there because plugins apparently do not support
-   	hidden settings. If you already put stuff in there, oh well. It's getting overwritten.
-   *****
-2. Go to your plugin manager and open up the plugin admin page.
-3. Click the authorize link so that the plugin can store your oAuth details from Twitter.
-4. Tweet away! You'll find the Tweet Box towards the bottom of each "Page/Default" content
-   type.
+1. Deploy as you would a normal plugin, assign to a site(the plugin is not currently
+   tested for multi-site installs).
+2. You'll need to enter a caret delimited list of content types you would like to be able
+   to Tweet from. The list is pre-populated with Mura's standard content types.
+3. Go to your plugin manager and open up the plugin admin page.
+4. Click the authorize link so that the plugin can store your oAuth details from Twitter.
+5. Tweet away! You'll find the Tweet Box towards the bottom of each default type(i.e. "Page/Default").
 
 OTHER NOTES:
 ==========
-This is not currently set up to post Tweets from anything other than "Page/Default" type
-pages. Eventually this will be a setting, but not tonight.
-
 Please report any bugs via the GitHub repository(https://github.com/s992/tweet-this).
 Feel free to submit as many pull requests as you want, all criticism is welcome.

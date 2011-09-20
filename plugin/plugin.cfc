@@ -41,7 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			local.moduleid = variables.config.getModuleID();
 			
 			createConfigExtendSet();
-			createSubTypes("Page");
+			createSubTypes( variables.config.getSetting('contentTypes') );
 
 			application.appInitialized = false;
 		</cfscript>
@@ -129,7 +129,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
 		
 		<!--- Loop through all potential content types(Page, Gallery, Portal, etc) --->
-		<cfloop list="#arguments.types#" index="type">
+		<cfloop list="#arguments.types#" index="type" delimiters="^">
 			<cfscript>
 				// To be honest, I'm not sure if this is necessary since each content type is
 				// already using a "Default" subtype...
