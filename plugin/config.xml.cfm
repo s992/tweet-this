@@ -26,6 +26,7 @@
 		<eventHandler event="onApplicationLoad" component="pluginEventHandler" persist="false" />
 		<eventHandler event="onBeforeContentSave" component="pluginEventHandler" persist="false" />
 		<eventHandler event="onAfterContentSave" component="pluginEventHandler" persist="false" />
+		<eventHandler event="onContentEdit" component="pluginEventHandler" persist="false" />
 	</eventHandlers>
 	<displayobjects location="global">
 	</displayobjects>

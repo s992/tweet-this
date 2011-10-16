@@ -28,6 +28,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<!--- Include FW/1 configuration that is shared between the Mura CMS and the FW/1 application. --->
 	<cfset variables.framework = getFramework() />
 	
+	<cffunction name="onContentEdit" access="public" output="true">
+		<cfargument name="$" required="true" hint="mura scope">
+		<cfinclude template="admin/views/onContentEdit.cfm" />
+	</cffunction>
+	
 	<cffunction name="onBeforeContentSave" access="public" output="false">
 		<cfargument name="$" required="true" hint="mura scope">
 		
