@@ -41,7 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			local.moduleid = variables.config.getModuleID();
 			
 			createConfigExtendSet();
-			createSubTypes( variables.config.getSetting('contentTypes') );
+			createTweetExtendSet();
 
 			application.appInitialized = false;
 		</cfscript>
@@ -51,6 +51,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<cfscript>
 			// this will be executed by the pluginManager when the plugin is updated.
 			application.appInitialized = false;
+			install();
 		</cfscript>
 	</cffunction>
 	
@@ -69,7 +70,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<!--- tweet-this specific --->
 	<cffunction name="createConfigExtendSet" access="public" returntype="void" output="false">
 		<cfscript>
-			configType = application.classExtensionManager.getSubTypeBean();
+			var configSet = '';
+			var configType = application.classExtensionManager.getSubTypeBean();
+			
 			configType.setType( "Custom" );
 			configType.setSubType( "Tweet This Config" );
 			configType.setSiteID( session.siteID );
@@ -125,46 +128,41 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		</cfscript>
 	</cffunction>
 	
-	<cffunction name="createSubTypes" access="public" returntype="any" output="false">
-		<cfargument name="types" type="string" required="true" hint="Comma delimited list of types of content." />
-		
-		<!--- Loop through all potential content types(Page, Gallery, Portal, etc) --->
-		<cfloop list="#arguments.types#" index="type" delimiters="^">
-			<cfscript>
-				// To be honest, I'm not sure if this is necessary since each content type is
-				// already using a "Default" subtype...
-				subType = application.classExtensionManager.getSubTypeBean();
-				subType.setType( type );
-				subType.setSubType( "Default" );
-				subType.setSiteID( session.siteID );
-				subType.load();
-				subType.setBaseTable( "tcontent" );
-				subType.setBaseKeyField( "contentHistID" );
-				subType.save();
-				
-				// Create the extend set and attributes on our "new" subtype
-				createAttributes( subType );
-			</cfscript>
+	<cffunction name="createTweetExtendSet" access="public" returntype="void" output="false">
+		<cfscript>
+			var tweetSet = '';
+			var tweetType = application.classExtensionManager.getSubTypeBean();
 			
-		</cfloop>
+			tweetType.setType( "Custom" );
+			tweetType.setSubType( "Tweet This" );
+			tweetType.setSiteID( session.siteID );
+			tweetType.load();
+			tweetType.setBaseTable( "tcontent" );
+			tweetType.setBaseKeyField( "contentHistID" );
+			tweetType.save();
+			
+			tweetSet = tweetType.getExtendSetByName( "Default" );
+			tweetSet.setSiteID( session.siteID );
+			tweetSet.save();
+			
+			createTweetAttributes( tweetType );
+		</cfscript>
 		
 	</cffunction>
 	
-	<cffunction name="createAttributes" access="public" returntype="any" output="false">
-		<cfargument name="subType" required="true" />
-		
+	<cffunction name="createTweetAttributes" access="public" returntype="void" output="false">
+		<cfargument name="tweetType" required="true" />
 		<cfscript>
-			// First let's create the set. This will overwrite any existing set named "Tweet This!"
-			newSet = arguments.subType.getExtendSetByName( "Tweet This!" );
-			newSet.setSiteID( session.siteID );
-			newSet.setName( "Tweet This!" );
-			newSet.setContainer( "Basic" );
-			newSet.save();
+			var tweetSet = arguments.tweetType.getExtendSetByName( "Default" );
+			var tweetCheck = '';
+			var tweetBox = '';
 			
-			// Now to add the new attributes to the set...
-			extendSet = arguments.subType.getExtendSetByName( "Tweet This!" );
+			tweetSet.setSiteID( session.siteID );
+			tweetSet.setName( "Tweet This!" );
+			tweetSet.setContainer( "Custom" );
+			tweetSet.save();
 			
-			tweetCheck = extendSet.getAttributeByName( "tweetcheck" );
+			tweetCheck = tweetSet.getAttributeByName( "tweetcheck" );
 			tweetCheck.setLabel( "Tweet this?" );
 			tweetCheck.setType( "RadioGroup" );
 			tweetCheck.setOptionList( "Yes^No" );
@@ -172,7 +170,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			tweetCheck.setDefaultValue( "No" );
 			tweetCheck.save();
 			
-			tweetBox = extendSet.getAttributeByName( "tweetbox" );
+			tweetBox = tweetSet.getAttributeByName( "tweetbox" );
 			tweetBox.setLabel( "Tweet Text:" );
 			tweetBox.setType( "TextArea" );
 			tweetBox.setHint( "Enter your Tweet here." );
@@ -181,7 +179,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			tweetBox.setMessage( "Please enter no more than 140 characters in the Tweet Box." );
 			tweetBox.save();
 		</cfscript>
-		
 	</cffunction>
 	
 	<!--- *******************************    private    ******************************** --->
