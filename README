@@ -1,12 +1,10 @@
+If you are running the 5.5 preview of Mura, this probably will not work for you unless you replace your /requirements folder with the most recent revision from Mura's repository.
+
 INSTALLATION:
 ==========
-1. Deploy as you would a normal plugin, assign to a site(the plugin is not currently
-   tested for multi-site installs).
-2. You'll need to enter a caret delimited list of content types you would like to be able
-   to Tweet from. The list is pre-populated with Mura's standard content types.
-3. Go to your plugin manager and open up the plugin admin page.
-4. Click the authorize link so that the plugin can store your oAuth details from Twitter.
-5. Tweet away! You'll find the Tweet Box towards the bottom of each default type(i.e. "Page/Default").
+1. Install the plugin.
+2. Go to your plugin manager and open up the plugin admin page.
+3. Click the authorize link so that the plugin can store your oAuth details from Twitter.
 
 OTHER NOTES:
 ==========
